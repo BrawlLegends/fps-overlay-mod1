@@ -26,10 +26,11 @@ jobs:
 
       - name: Build with Gradle
         run: gradle build --no-daemon
+        working-directory: fps-overlay
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: fpsoverlay-1.0.0
-          path: build/libs/*.jar
+          path: fps-overlay/build/libs/*.jar
           if-no-files-found: error
