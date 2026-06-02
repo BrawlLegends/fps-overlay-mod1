@@ -4,9 +4,7 @@ import com.fpsoverlay.config.FPSConfig;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -21,20 +19,20 @@ public class FPSOverlay {
         FontRenderer font = mc.font;
         MatrixStack ms = event.getMatrixStack();
 
-        int fps = mc.getFps();
+        int fps = Minecraft.fps;
 
         String prefix = FPSConfig.PREFIX.get();
         String suffix = FPSConfig.SUFFIX.get();
-        String text = prefix + fps + suffix;
 
-        Style style = Style.EMPTY
-                .withBold(FPSConfig.BOLD.get())
-                .withItalic(FPSConfig.ITALIC.get())
-                .withStrikethrough(FPSConfig.STRIKETHROUGH.get())
-                .withUnderlined(FPSConfig.UNDERLINE.get())
-                .withObfuscated(FPSConfig.OBFUSCATED.get());
+        StringBuilder sb = new StringBuilder();
+        if (FPSConfig.BOLD.get())          sb.append("\u00a7l");
+        if (FPSConfig.ITALIC.get())        sb.append("\u00a7o");
+        if (FPSConfig.STRIKETHROUGH.get()) sb.append("\u00a7m");
+        if (FPSConfig.UNDERLINE.get())     sb.append("\u00a7n");
+        if (FPSConfig.OBFUSCATED.get())    sb.append("\u00a7k");
+        sb.append(prefix).append(fps).append(suffix);
 
-        IFormattableTextComponent component = new StringTextComponent(text).withStyle(style);
+        String text = sb.toString();
 
         int x = FPSConfig.POS_X.get();
         int y = FPSConfig.POS_Y.get();
@@ -47,6 +45,8 @@ public class FPSOverlay {
 
         int scaledX = (int) (x / scale);
         int scaledY = (int) (y / scale);
+
+        StringTextComponent component = new StringTextComponent(text);
 
         if (shadow) {
             font.drawShadow(ms, component, scaledX, scaledY, color);
