@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+
+[[dependencies.fpsoverlay]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36.2.39,)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.fpsoverlay]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[mods]]
+    modId="fpsoverlay"
+    version="1.0.0"
+    displayName="FPS Overlay"
+    description='''
+Customizable FPS overlay for Minecraft 1.16.5.
+Shows real-time FPS with full formatting support.
+Press F9 to open the settings menu.
+'''
