@@ -19,25 +19,17 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
 
-      - name: Cache Gradle packages
-        uses: actions/cache@v4
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          gradle-version: '7.5.1'
 
       - name: Build with Gradle
-        run: |
-          chmod +x gradlew
-          ./gradlew build --no-daemon
-        working-directory: fps-overlay
+        run: gradle build --no-daemon
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: fpsoverlay-1.0.0
-          path: fps-overlay/build/libs/*.jar
+          path: build/libs/*.jar
           if-no-files-found: error
